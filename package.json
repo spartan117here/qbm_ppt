@@ -1,0 +1,10 @@
+{
+  "name": "agm-presenter",
+  "version": "0.1.0",
+  "private": true,
+  "description": "AGM Presenter project architecture",
+  "type": "module",
+  "scripts": {},
+  "dependencies": {},
+  "devDependencies": {}
+}
