@@ -1,0 +1,191 @@
+{
+  "viewports": [
+    {
+      "viewport": "Desktop Full HD 1920x1080",
+      "width": 1920,
+      "height": 1080,
+      "pdfWidth": 1128,
+      "pdfHeight": 634.5,
+      "pdfAspect": 1.7777777777777777,
+      "overlapPixels": 0,
+      "passed": true
+    },
+    {
+      "viewport": "Laptop 16:10 (1440x900)",
+      "width": 1440,
+      "height": 900,
+      "pdfWidth": 832,
+      "pdfHeight": 468,
+      "pdfAspect": 1.7777777777777777,
+      "overlapPixels": 0,
+      "passed": true
+    },
+    {
+      "viewport": "Laptop 16:9 (1366x768)",
+      "width": 1366,
+      "height": 768,
+      "pdfWidth": 826.9375,
+      "pdfHeight": 465.140625,
+      "pdfAspect": 1.7778225671000034,
+      "overlapPixels": 0,
+      "passed": true
+    },
+    {
+      "viewport": "Compact Laptop (1280x800)",
+      "width": 1280,
+      "height": 800,
+      "pdfWidth": 799.21875,
+      "pdfHeight": 449.546875,
+      "pdfAspect": 1.7778318445657084,
+      "overlapPixels": 0,
+      "passed": true
+    }
+  ],
+  "slides": [
+    {
+      "slideNumber": 1,
+      "counterText": "01 / 10",
+      "anchor": "left",
+      "overlapPixels": 0,
+      "passed": true
+    },
+    {
+      "slideNumber": 2,
+      "counterText": "02 / 10",
+      "anchor": "right",
+      "overlapPixels": 0,
+      "passed": true
+    },
+    {
+      "slideNumber": 3,
+      "counterText": "03 / 10",
+      "anchor": "right",
+      "overlapPixels": 0,
+      "passed": true
+    },
+    {
+      "slideNumber": 4,
+      "counterText": "04 / 10",
+      "anchor": "left",
+      "overlapPixels": 0,
+      "passed": true
+    },
+    {
+      "slideNumber": 5,
+      "counterText": "05 / 10",
+      "anchor": "left",
+      "overlapPixels": 0,
+      "passed": true
+    },
+    {
+      "slideNumber": 6,
+      "counterText": "06 / 10",
+      "anchor": "right",
+      "overlapPixels": 0,
+      "passed": true
+    },
+    {
+      "slideNumber": 7,
+      "counterText": "07 / 10",
+      "anchor": "left",
+      "overlapPixels": 0,
+      "passed": true
+    },
+    {
+      "slideNumber": 8,
+      "counterText": "08 / 10",
+      "anchor": "left",
+      "overlapPixels": 0,
+      "passed": true
+    },
+    {
+      "slideNumber": 9,
+      "counterText": "09 / 10",
+      "anchor": "left",
+      "overlapPixels": 0,
+      "passed": true
+    },
+    {
+      "slideNumber": 10,
+      "counterText": "10 / 10",
+      "anchor": "right",
+      "overlapPixels": 0,
+      "passed": true
+    }
+  ],
+  "allClips": [
+    {
+      "clipId": "EXPLAIN_1",
+      "anchor": "right",
+      "actorRight": 1920,
+      "pdfLeft": 396,
+      "pdfRight": 1524,
+      "overlapPixels": 0,
+      "passed": true
+    },
+    {
+      "clipId": "EXPLAIN_2",
+      "anchor": "right",
+      "actorRight": 1920,
+      "pdfLeft": 396,
+      "pdfRight": 1524,
+      "overlapPixels": 0,
+      "passed": true
+    },
+    {
+      "clipId": "EXPLAIN_3",
+      "anchor": "right",
+      "actorRight": 1920,
+      "pdfLeft": 396,
+      "pdfRight": 1524,
+      "overlapPixels": 0,
+      "passed": true
+    },
+    {
+      "clipId": "SWIPE_1",
+      "anchor": "right",
+      "actorRight": 1920,
+      "pdfLeft": 396,
+      "pdfRight": 1524,
+      "overlapPixels": 0,
+      "passed": true
+    },
+    {
+      "clipId": "SWIPE_2",
+      "anchor": "right",
+      "actorRight": 1920,
+      "pdfLeft": 396,
+      "pdfRight": 1524,
+      "overlapPixels": 0,
+      "passed": true
+    },
+    {
+      "clipId": "WALK_L_TO_R",
+      "anchor": "right",
+      "actorRight": 1920,
+      "pdfLeft": 396,
+      "pdfRight": 1524,
+      "overlapPixels": 0,
+      "passed": true
+    },
+    {
+      "clipId": "WALK_R_TO_L",
+      "anchor": "right",
+      "actorRight": 1920,
+      "pdfLeft": 396,
+      "pdfRight": 1524,
+      "overlapPixels": 0,
+      "passed": true
+    },
+    {
+      "clipId": "WALK_L_TO_R_2",
+      "anchor": "right",
+      "actorRight": 1920,
+      "pdfLeft": 396,
+      "pdfRight": 1524,
+      "overlapPixels": 0,
+      "passed": true
+    }
+  ],
+  "overallResult": "PASS"
+}

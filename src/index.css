@@ -56,31 +56,30 @@ html, body {
 .agm-app-root {
   width: 100vw;
   height: 100vh;
-  background: #07080a;
+  background: #f6f7f6;
   position: relative;
   overflow: hidden;
   cursor: none; /* Hide native cursor in presentation mode */
 }
 
-/* Slide Counter Overlay — bottom-right, subtle */
+/* Slide Counter Overlay — bottom-right, subtle dark text on white */
 .slide-counter-overlay {
   position: absolute;
   bottom: 16px;
   right: 20px;
   z-index: 35;
   font-family: var(--font-heading);
-  font-size: 12px;
+  font-size: 13px;
   font-weight: 700;
   letter-spacing: 2.5px;
-  color: rgba(255, 255, 255, 0.32);
+  color: rgba(15, 23, 42, 0.45);
   pointer-events: none;
   user-select: none;
-  text-shadow: 0 1px 6px rgba(0,0,0,0.8);
   transition: color 0.25s ease;
 }
 
 .presentation-stage-container:hover .slide-counter-overlay {
-  color: rgba(255, 255, 255, 0.55);
+  color: rgba(15, 23, 42, 0.75);
 }
 
 /* ============================================
@@ -100,7 +99,7 @@ html, body {
   border-radius: 10px;
   border: none;
   background: transparent;
-  color: rgba(255, 255, 255, 0.38);
+  color: rgba(15, 23, 42, 0.45);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -114,9 +113,9 @@ html, body {
 .fullscreen-btn svg {
   width: 20px;
   height: 20px;
-  /* Subtle frosted frame around just the icon area */
-  background: rgba(255, 255, 255, 0.06);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  /* Subtle frosted light frame around just the icon area */
+  background: rgba(0, 0, 0, 0.04);
+  border: 1px solid rgba(0, 0, 0, 0.09);
   border-radius: 6px;
   padding: 3px;
   box-sizing: content-box;
@@ -124,10 +123,10 @@ html, body {
 }
 
 .fullscreen-btn:hover svg {
-  background: rgba(255, 255, 255, 0.14);
-  border-color: rgba(255, 255, 255, 0.28);
-  box-shadow: 0 0 14px rgba(59, 130, 246, 0.25);
-  color: rgba(255, 255, 255, 0.9);
+  background: rgba(0, 0, 0, 0.08);
+  border-color: rgba(0, 0, 0, 0.2);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+  color: #0f172a;
 }
 
 .fullscreen-btn:active svg {
@@ -135,23 +134,23 @@ html, body {
 }
 
 .fullscreen-btn.fullscreen-btn-active {
-  color: rgba(99, 179, 237, 0.8);
+  color: #2563eb;
 }
 
 .fullscreen-btn.fullscreen-btn-active svg {
-  background: rgba(59, 130, 246, 0.14);
-  border-color: rgba(59, 130, 246, 0.32);
+  background: rgba(37, 99, 235, 0.08);
+  border-color: rgba(37, 99, 235, 0.3);
 }
 
 .fullscreen-btn.fullscreen-btn-active:hover svg {
-  background: rgba(59, 130, 246, 0.22);
-  color: rgba(147, 210, 255, 1);
-  box-shadow: 0 0 16px rgba(59, 130, 246, 0.4);
+  background: rgba(37, 99, 235, 0.15);
+  color: #1d4ed8;
+  box-shadow: 0 0 14px rgba(37, 99, 235, 0.2);
 }
 
 /* ============================================
-   CUSTOM CINEMATIC CURSOR
-   — no bubble, no ring, cursor ITSELF reacts to press
+   CUSTOM CINEMATIC CURSOR (HIGH CONTRAST ON WHITE)
+   — tracks mouse exactly
    ============================================ */
 .custom-cursor {
   position: absolute;
@@ -164,7 +163,6 @@ html, body {
   display: flex;
   align-items: center;
   justify-content: center;
-  /* No transition on position — tracks mouse exactly */
 }
 
 /* Frosted circle behind the arrow */
@@ -173,8 +171,8 @@ html, body {
   position: absolute;
   inset: 4px;
   border-radius: 50%;
-  background: rgba(255, 255, 255, 0.08);
-  border: 1.5px solid rgba(255, 255, 255, 0.22);
+  background: rgba(0, 0, 0, 0.04);
+  border: 1.5px solid rgba(0, 0, 0, 0.14);
   transition: background 0.12s ease, border-color 0.12s ease, box-shadow 0.12s ease;
 }
 
@@ -183,47 +181,53 @@ html, body {
   height: 26px;
   position: relative;
   z-index: 1;
-  color: rgba(255, 255, 255, 0.8);
+  color: rgba(15, 23, 42, 0.7);
   transition: color 0.12s ease;
-  filter: drop-shadow(0 2px 5px rgba(0,0,0,0.6));
+  filter: drop-shadow(0 2px 4px rgba(0,0,0,0.15));
 }
 
 /* Right (Next) — blue tint */
 .custom-cursor-right::before {
-  background: rgba(59, 130, 246, 0.14);
-  border-color: rgba(99, 162, 255, 0.38);
-  box-shadow: 0 0 18px rgba(59, 130, 246, 0.22);
+  background: rgba(37, 99, 235, 0.08);
+  border-color: rgba(37, 99, 235, 0.32);
+  box-shadow: 0 4px 14px rgba(37, 99, 235, 0.12);
 }
 .custom-cursor-right svg {
-  color: rgba(180, 210, 255, 0.92);
+  color: #2563eb;
 }
 
-/* Left (Prev) — silver tint */
+/* Left (Prev) — silver/slate tint */
 .custom-cursor-left::before {
-  background: rgba(148, 163, 184, 0.10);
-  border-color: rgba(148, 163, 184, 0.26);
-  box-shadow: 0 0 10px rgba(148, 163, 184, 0.12);
+  background: rgba(71, 85, 105, 0.08);
+  border-color: rgba(71, 85, 105, 0.25);
+  box-shadow: 0 4px 10px rgba(71, 85, 105, 0.08);
 }
 .custom-cursor-left svg {
-  color: rgba(200, 210, 220, 0.85);
+  color: #475569;
 }
 
-/* PRESSED STATE — cursor itself lights up, NO external bubble */
+/* PRESSED STATE — cursor itself lights up */
 .custom-cursor-pressed::before {
-  background: rgba(255, 255, 255, 0.28) !important;
-  border-color: rgba(255, 255, 255, 0.7) !important;
-  box-shadow: 0 0 28px rgba(255, 255, 255, 0.35) !important;
+  background: rgba(37, 99, 235, 0.18) !important;
+  border-color: #2563eb !important;
+  box-shadow: 0 0 20px rgba(37, 99, 235, 0.25) !important;
 }
 .custom-cursor-pressed svg {
-  color: #ffffff !important;
-  filter: drop-shadow(0 0 8px rgba(255,255,255,0.8)) !important;
+  color: #1d4ed8 !important;
+  filter: drop-shadow(0 0 6px rgba(37, 99, 235, 0.5)) !important;
 }
 
-/* ============================================
-   STAGE LAYOUT — 16:9 FULL VIEWPORT
-   The PDF fills the entire screen.
-   No card. No rounded frame. No small box.
-   ============================================ */
+/* ==========================================================================
+   TWO-REGION CINEMATIC STAGE: PRESENTER RAIL (LEFT) + HUGE PPT (RIGHT)
+   Region 1: Dedicated Left Presenter Rail (14–16% viewport width, PPT matching white)
+   Region 2: Independent Slide Viewport (84–86% viewport width, maximum PPT size)
+   ========================================================================== */
+
+:root {
+  --ppt-bg: #f6f7f6;
+  --presenter-rail-width: clamp(180px, 15.5vw, 360px);
+}
+
 .presentation-stage-container {
   position: relative;
   width: 100vw;
@@ -231,158 +235,59 @@ html, body {
   display: flex;
   align-items: center;
   justify-content: center;
-  background: #000;
+  background: var(--ppt-bg);
   cursor: none;
-}
-
-/* 16:9 outer stage — fills as much viewport as possible */
-.presentation-stage-aspect {
-  position: relative;
-  /* Fill width on wide monitors, fill height on tall monitors */
-  aspect-ratio: 16 / 9;
-  width: 100vw;
-  max-height: 100vh;
-  max-width: calc(100vh * 16 / 9);
   overflow: hidden;
-  background: #000;
+  user-select: none;
 }
 
-/* Full-stage PDF layer — no card, no border, no rounded corners */
-.slide-fullscreen-layer {
-  position: absolute;
-  inset: 0;
-  z-index: 2;
-  background: #000;
+/* Two-column structural grid: Left Presenter Rail + Huge Slide Viewport */
+.presentation-stage-layout {
+  display: grid;
+  grid-template-columns: var(--presenter-rail-width) minmax(0, 1fr);
+  grid-template-rows: 100vh;
+  width: 100vw;
+  height: 100vh;
+  position: relative;
+  overflow: hidden;
+  background: var(--ppt-bg);
 }
 
-/* Override PresentationViewer inner canvas to fill container */
-.slide-fullscreen-layer .presentation-slide-wrapper {
-  background: #000;
-}
-
-.slide-fullscreen-layer .presentation-slide-canvas {
+/* ─────────────────────────────────────────────────────────────
+   REGION 1: DEDICATED LEFT PRESENTER RAIL
+   - Same white background as PPT slide (#f6f7f6)
+   - Zero borders, zero shadows, zero gradients
+   - Strict clipping (overflow: hidden) prevents any pixel from entering PPT
+   ───────────────────────────────────────────────────────────── */
+.presenter-rail {
+  grid-column: 1;
+  grid-row: 1;
+  position: relative;
   width: 100%;
   height: 100%;
-  object-fit: contain;
+  overflow: hidden; /* HARD CLIPPING: Absolutely no presenter pixels ever enter Slide Viewport */
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  background: var(--ppt-bg);
+  pointer-events: none;
+  z-index: 4;
+  border: none;
+  box-shadow: none;
 }
 
-/* ============================================
-   AGM FOREGROUND LAYER
-   Full-stage 1920×1080 canvas — presenter stands
-   at left of frame naturally (as filmed).
-   ============================================ */
-.stage-layer-foreground {
+/* Presenter Stage Actor container inside Rail */
+.presenter-stage-actor {
   position: absolute;
-  top: 0;
   bottom: 0;
-  height: 100%;
-  /* Full stage width so the 1920×1080 canvas renders at full height */
+  left: 0;
   width: 100%;
-  z-index: 10;
+  height: 100%;
+  overflow: hidden;
   pointer-events: none;
 }
 
-/* LEFT ANCHOR: render from left edge (presenter stands on left of frame) */
-.stage-layer-foreground.anchor-left {
-  left: 0;
-  right: auto;
-}
-
-/* RIGHT ANCHOR: render from right edge (presenter stands on right of frame) */
-.stage-layer-foreground.anchor-right {
-  left: auto;
-  right: 0;
-}
-
-/* WALK L→R: pan from left towards center-right */
-.stage-layer-foreground.anchor-walk-l-to-r {
-  left: 0;
-  right: auto;
-  animation: walk-l-to-r-pan 6.0s linear forwards;
-}
-
-@keyframes walk-l-to-r-pan {
-  0%   { transform: translateX(0); }
-  100% { transform: translateX(22%); }
-}
-
-/* WALK R→L: pan from right towards center-left */
-.stage-layer-foreground.anchor-walk-r-to-l {
-  left: auto;
-  right: 0;
-  animation: walk-r-to-l-pan 6.0s linear forwards;
-}
-
-@keyframes walk-r-to-l-pan {
-  0%   { transform: translateX(0); }
-  100% { transform: translateX(-18%); }
-}
-
-/* Presentation Slide Canvas */
-.presentation-slide-wrapper {
-  width: 100%;
-  height: 100%;
-  position: relative;
-  background: #000;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.presentation-slide-canvas {
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
-  transition: opacity 0.35s ease, transform 0.4s var(--transition-smooth);
-}
-
-.slide-anim-next {
-  opacity: 0.85;
-  transform: scale(0.995);
-}
-
-.slide-anim-prev {
-  opacity: 0.85;
-  transform: scale(1.005);
-}
-
-.slide-anim-settled {
-  opacity: 1;
-  transform: scale(1);
-}
-
-.presentation-loader {
-  position: absolute;
-  inset: 0;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 12px;
-  background: #0d1117;
-  color: var(--text-muted);
-  z-index: 5;
-}
-
-.presentation-spinner {
-  width: 36px;
-  height: 36px;
-  border: 3px solid rgba(255, 255, 255, 0.1);
-  border-top-color: var(--primary);
-  border-radius: 50%;
-  animation: spin 0.8s linear infinite;
-}
-
-@keyframes spin {
-  to { transform: rotate(360deg); }
-}
-
-.presentation-loader-text {
-  font-size: 13px;
-  letter-spacing: 0.5px;
-}
-
-/* Presenter Video & WebGL Canvas */
+/* Presenter Canvas Container & Output Canvas */
 .presenter-canvas-container {
   width: 100%;
   height: 100%;
@@ -391,18 +296,170 @@ html, body {
 }
 
 .presenter-source-video {
-  display: none; /* Processed strictly in WebGL */
+  display: none;
 }
 
+/* Presenter Output Canvas:
+   - Grounded to floor (bottom: 0)
+   - Height is 100% of stage height for tall, clear executive presence
+   - Aspect ratio is 16:9 auto width
+   - Soft, natural ground shadow on white floor
+*/
 .presenter-output-canvas {
-  /* contain: show full 1920×1080 frame so presenter appears at
-     natural left-of-frame position without cropping */
+  position: absolute;
+  bottom: 0;
+  height: 100% !important;
+  width: auto !important;
+  aspect-ratio: 16 / 9;
+  max-width: none !important;
+  pointer-events: none;
+  filter: drop-shadow(0 14px 28px rgba(0, 0, 0, 0.14));
+}
+
+/* ─────────────────────────────────────────────────────────────
+   EXACT SILHOUETTE CENTERING PER CLIP INSIDE PRESENTER RAIL
+   (Positions the visible body center at 50% of the rail width)
+   ───────────────────────────────────────────────────────────── */
+.presenter-stage-actor.clip-explain_1 .presenter-output-canvas {
+  left: 50% !important;
+  right: auto !important;
+  transform: translateX(-21.3%) !important;
+}
+
+.presenter-stage-actor.clip-explain_2 .presenter-output-canvas {
+  left: 50% !important;
+  right: auto !important;
+  transform: translateX(-22.0%) !important;
+}
+
+.presenter-stage-actor.clip-explain_3 .presenter-output-canvas {
+  left: 50% !important;
+  right: auto !important;
+  transform: translateX(-84.0%) !important;
+}
+
+.presenter-stage-actor.clip-swipe_next .presenter-output-canvas {
+  left: 50% !important;
+  right: auto !important;
+  transform: translateX(-49.3%) !important;
+}
+
+.presenter-stage-actor.clip-swipe_reverse .presenter-output-canvas {
+  left: 50% !important;
+  right: auto !important;
+  transform: translateX(-48.6%) !important;
+}
+
+.presenter-stage-actor.clip-walk_l_to_r .presenter-output-canvas {
+  left: 50% !important;
+  right: auto !important;
+  transform: translateX(-14%) !important;
+}
+
+.presenter-stage-actor.clip-walk_r_to_l .presenter-output-canvas {
+  left: 50% !important;
+  right: auto !important;
+  transform: translateX(-79%) !important;
+}
+
+.presenter-stage-actor.clip-walk_l_to_r_2 .presenter-output-canvas {
+  left: 50% !important;
+  right: auto !important;
+  transform: translateX(-18%) !important;
+}
+
+/* ─────────────────────────────────────────────────────────────
+   REGION 2: HUGE INDEPENDENT SLIDE VIEWPORT (PPT HIGHEST PRIORITY)
+   - Consumes approximately 84–86% of viewport width
+   - Zero padding, zero artificial margins, zero card border-radius, zero card shadow
+   - Maximizes 16:9 aspect ratio dynamically within available space
+   ───────────────────────────────────────────────────────────── */
+.slide-viewport {
+  grid-column: 2;
+  grid-row: 1;
+  position: relative;
   width: 100%;
   height: 100%;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--ppt-bg);
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+/* Presentation Slide Wrapper */
+.presentation-slide-wrapper {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  background: var(--ppt-bg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  margin: 0;
+}
+
+/* Presentation Slide Canvas: Maximum size, strict 16:9, clean presentation bleed */
+.presentation-slide-canvas {
+  max-width: 100%;
+  max-height: 100%;
+  width: auto;
+  height: auto;
+  aspect-ratio: 16 / 9;
   object-fit: contain;
-  object-position: left center;
-  pointer-events: none;
-  filter: drop-shadow(0 20px 40px rgba(0, 0, 0, 0.7));
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  border: none !important;
+  background: var(--ppt-bg);
+  transition: opacity 0.35s ease, transform 0.4s var(--transition-smooth);
+}
+
+.slide-anim-next {
+  opacity: 0.92;
+  transform: scale(0.996);
+}
+
+.slide-anim-prev {
+  opacity: 0.92;
+  transform: scale(1.004);
+}
+
+.slide-anim-settled {
+  opacity: 1;
+  transform: scale(1);
+}
+
+/* PDF Loader */
+.presentation-loader {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  background: var(--ppt-bg);
+  color: #64748b;
+  z-index: 5;
+}
+
+.presentation-spinner {
+  width: 36px;
+  height: 36px;
+  border: 3px solid rgba(0, 0, 0, 0.08);
+  border-top-color: #2563eb;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+.presentation-loader-text {
+  font-size: 13px;
+  letter-spacing: 0.5px;
+  color: #475569;
 }
 
 /* Bottom Controls Dock — REMOVED (now replaced by click navigation) */

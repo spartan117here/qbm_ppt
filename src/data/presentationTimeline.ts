@@ -39,9 +39,9 @@ export const PRESENTATION_DATA: PresentationConfig = {
       presenterAnchor: "left",
       explainVideo: AGM_VIDEOS.EXPLAIN_1,
       transitionRecipe: "swipe_then_walk",
-      swipeVideo: AGM_VIDEOS.SWIPE_2,
+      swipeVideo: AGM_VIDEOS.SWIPE_NEXT,
       walkVideo: AGM_VIDEOS.WALK_L_TO_R_2,
-      swipeTriggerOffset: 3.58, // At hand push apex, Slide 2 appears, then AGM walks across
+      swipeTriggerOffset: 2.2, // Holographic interaction apex where next slide appears
       targetAnchor: "right",
     },
     {
@@ -74,8 +74,8 @@ export const PRESENTATION_DATA: PresentationConfig = {
       presenterAnchor: "left",
       explainVideo: AGM_VIDEOS.EXPLAIN_2,
       transitionRecipe: "swipe_only",
-      swipeVideo: AGM_VIDEOS.SWIPE_1,
-      swipeTriggerOffset: 2.46,
+      swipeVideo: AGM_VIDEOS.SWIPE_NEXT,
+      swipeTriggerOffset: 2.2,
       targetAnchor: "left",
     },
     {
@@ -86,9 +86,9 @@ export const PRESENTATION_DATA: PresentationConfig = {
       presenterAnchor: "left",
       explainVideo: AGM_VIDEOS.EXPLAIN_1,
       transitionRecipe: "swipe_then_walk",
-      swipeVideo: AGM_VIDEOS.SWIPE_2,
+      swipeVideo: AGM_VIDEOS.SWIPE_NEXT,
       walkVideo: AGM_VIDEOS.WALK_L_TO_R,
-      swipeTriggerOffset: 3.58, // Slide 6 appears, then AGM walks across the 5 timeline steps!
+      swipeTriggerOffset: 2.2,
       targetAnchor: "right",
     },
     {
@@ -111,8 +111,8 @@ export const PRESENTATION_DATA: PresentationConfig = {
       presenterAnchor: "left",
       explainVideo: AGM_VIDEOS.EXPLAIN_2,
       transitionRecipe: "swipe_only",
-      swipeVideo: AGM_VIDEOS.SWIPE_2,
-      swipeTriggerOffset: 3.58,
+      swipeVideo: AGM_VIDEOS.SWIPE_NEXT,
+      swipeTriggerOffset: 2.2,
       targetAnchor: "left",
     },
     {
@@ -123,8 +123,8 @@ export const PRESENTATION_DATA: PresentationConfig = {
       presenterAnchor: "left",
       explainVideo: AGM_VIDEOS.EXPLAIN_1,
       transitionRecipe: "swipe_only",
-      swipeVideo: AGM_VIDEOS.SWIPE_1,
-      swipeTriggerOffset: 2.46,
+      swipeVideo: AGM_VIDEOS.SWIPE_NEXT,
+      swipeTriggerOffset: 2.2,
       targetAnchor: "left",
     },
     {
@@ -135,9 +135,9 @@ export const PRESENTATION_DATA: PresentationConfig = {
       presenterAnchor: "left",
       explainVideo: AGM_VIDEOS.EXPLAIN_1,
       transitionRecipe: "swipe_then_walk",
-      swipeVideo: AGM_VIDEOS.SWIPE_2,
+      swipeVideo: AGM_VIDEOS.SWIPE_NEXT,
       walkVideo: AGM_VIDEOS.WALK_L_TO_R_2,
-      swipeTriggerOffset: 3.58, // Slide 10 appears, AGM walks right to closing pillars
+      swipeTriggerOffset: 2.2,
       targetAnchor: "right",
     },
     {

@@ -1,4 +1,4 @@
-import React, { useRef, useState, useCallback } from 'react';
+import React, { useRef, useState, useCallback, useEffect } from 'react';
 import { PresentationViewer } from './PresentationViewer';
 import { PresenterCanvas } from './PresenterCanvas';
 import { SlideStepConfig } from '../data/presentationTimeline';
@@ -92,32 +92,37 @@ export const PresentationStage: React.FC<PresentationStageProps> = ({
       onMouseUp={handleMouseUp}
       onClick={handleClick}
     >
-      {/* ── LAYER 1: Full-viewport PDF Presentation ── */}
-      <div className="slide-fullscreen-layer">
-        <PresentationViewer
-          pdfPath={pdfPath}
-          currentSlideNumber={displayedSlideNumber}
-          isTransitioning={isTransitioning}
-          transitionDirection={slideTransitionDirection}
-        />
-      </div>
+      {/* ── TWO-REGION STAGE: Small AGM Presenter Rail (Left) + Huge PPT (Right) ── */}
+      <div className="presentation-stage-layout">
+        {/* REGION 1: DEDICATED LEFT PRESENTER RAIL (14–16% width, matching PPT white background) */}
+        <div className="presenter-rail" id="presenter-rail" aria-label="AGM Presenter Rail">
+          <div className={`presenter-stage-actor clip-${activeVideo.id.toLowerCase()}`}>
+            <PresenterCanvas
+              canvasRef={canvasRef}
+              activeVideo={activeVideo}
+              chromaParams={chromaParams}
+              isPlaying={isPlaying}
+              isMuted={isMuted}
+              onVideoTimeUpdate={onVideoTimeUpdate}
+              onVideoEnded={onVideoEnded}
+            />
+          </div>
+        </div>
 
-      {/* ── LAYER 2: AGM Foreground — full stage, presenter stands left of frame ── */}
-      <div className={`stage-layer-foreground anchor-${currentAnchor}`}>
-        <PresenterCanvas
-          canvasRef={canvasRef}
-          activeVideo={activeVideo}
-          chromaParams={chromaParams}
-          isPlaying={isPlaying}
-          isMuted={isMuted}
-          onVideoTimeUpdate={onVideoTimeUpdate}
-          onVideoEnded={onVideoEnded}
-        />
+        {/* REGION 2: HUGE INDEPENDENT SLIDE VIEWPORT (84–86% width, maximum PPT size) */}
+        <div className="slide-viewport" id="slide-viewport" aria-label="Slide Viewport">
+          <PresentationViewer
+            pdfPath={pdfPath}
+            currentSlideNumber={displayedSlideNumber}
+            isTransitioning={isTransitioning}
+            transitionDirection={slideTransitionDirection}
+          />
+        </div>
       </div>
 
       {/* ── LAYER 3: Slide counter ── */}
       <div className="slide-counter-overlay" aria-label="Slide number">
-        {padNum(currentSlideIndex + 1)} / {padNum(totalSlides)}
+        {padNum(displayedSlideNumber)} / {padNum(totalSlides)}
       </div>
 
       {/* ── LAYER 4: Fullscreen toggle — stacked ABOVE counter ── */}

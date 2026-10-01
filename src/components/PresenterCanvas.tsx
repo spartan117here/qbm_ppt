@@ -22,7 +22,7 @@ export const PresenterCanvas: React.FC<PresenterCanvasProps> = ({
   onVideoTimeUpdate,
   onVideoEnded,
 }) => {
-  // Preloaded Video Elements Pool (all 9 clips stay in memory for zero-gap cuts)
+  // Preloaded Video Elements Pool (all 8 AGM clips stay in memory for zero-gap cuts)
   const videoElementsRef = useRef<Record<string, HTMLVideoElement>>({});
   const activeVideoRef = useRef<AGMVideoItem>(activeVideo);
   activeVideoRef.current = activeVideo;
@@ -86,7 +86,7 @@ export const PresenterCanvas: React.FC<PresenterCanvasProps> = ({
 
   return (
     <div className="presenter-canvas-container">
-      {/* Preloaded Video Pool: all 9 AGM clips primed in memory */}
+      {/* Preloaded Video Pool: all 8 AGM clips primed in memory */}
       <div className="presenter-video-pool" style={{ display: 'none' }}>
         {Object.values(AGM_VIDEOS).map((videoItem) => (
           <video

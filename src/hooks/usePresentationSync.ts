@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect, useCallback } from 'react';
 import { PRESENTATION_DATA, SlideStepConfig } from '../data/presentationTimeline';
-import { AGMVideoItem } from '../data/videoRegistry';
+import { AGM_VIDEOS, AGMVideoItem } from '../data/videoRegistry';
 
 export type PresentationState =
   | 'IDLE_EXPLAINING'
@@ -17,6 +17,7 @@ export interface PresentationSyncReturn {
   state: PresentationState;
   activeVideo: AGMVideoItem;
   currentAnchor: AnchorZone;
+  transitionDirection: 'next' | 'prev';
   isPlaying: boolean;
   isMuted: boolean;
   next: () => void;
@@ -33,6 +34,7 @@ export function usePresentationSync(): PresentationSyncReturn {
   const [displayedSlideIndex, setDisplayedSlideIndex] = useState(0);
   const [state, setState] = useState<PresentationState>('IDLE_EXPLAINING');
   const [activeVideo, setActiveVideo] = useState<AGMVideoItem>(PRESENTATION_DATA.slides[0].explainVideo);
+  const [transitionDirection, setTransitionDirection] = useState<'next' | 'prev'>('next');
   
   const [isPlaying, setIsPlaying] = useState(true);
   const [isMuted, setIsMuted] = useState(false);
@@ -43,15 +45,12 @@ export function usePresentationSync(): PresentationSyncReturn {
   const currentSlide = PRESENTATION_DATA.slides[currentSlideIndex];
   const totalSlides = PRESENTATION_DATA.totalSlides;
 
-  // Determine Presenter Visual Anchor for safe positioning & continuous walking
+  // Determine Presenter Visual Anchor for safe positioning inside dedicated zone
   const currentAnchor: AnchorZone = (() => {
     if (state === 'WALKING') {
-      if (activeVideo.id === 'WALK_R_TO_L') return 'walk-r-to-l';
-      return 'walk-l-to-r';
+      return activeVideo.targetAnchor === 'left' ? 'left' : 'right';
     }
-    if (state === 'SWIPING') {
-      return activeVideo.anchor === 'right' ? 'right' : 'left';
-    }
+    // During swiping, stay anchored in current slide's presenter zone until cut to target zone
     return currentSlide.presenterAnchor === 'right' ? 'right' : 'left';
   })();
 
@@ -59,44 +58,29 @@ export function usePresentationSync(): PresentationSyncReturn {
   const onVideoTimeUpdate = useCallback((currentTime: number) => {
     if (state !== 'SWIPING' || slideTriggeredRef.current) return;
 
-    const triggerOffset = currentSlide.swipeTriggerOffset ?? 2.5;
+    // Use active swipe video's trigger time: 2.2s for holographic swipe, 1.5s for remote button press
+    const triggerOffset = activeVideo.swipeTriggerTime ?? currentSlide.swipeTriggerOffset ?? 2.2;
 
-    // At exact hand push apex: flip the presentation slide
+    // At exact visual interaction moment: flip the presentation slide
     if (currentTime >= triggerOffset) {
       slideTriggeredRef.current = true;
       if (pendingTargetIndexRef.current !== null) {
         setDisplayedSlideIndex(pendingTargetIndexRef.current);
       }
     }
-  }, [state, currentSlide]);
+  }, [state, activeVideo, currentSlide]);
 
-  // Start choreographed transition to next slide
+  // Start choreographed forward transition to next slide (ALWAYS swipe next.mp4)
   const startTransition = useCallback((nextIndex: number) => {
     if (nextIndex >= totalSlides) return;
-    const recipe = currentSlide.transitionRecipe;
     pendingTargetIndexRef.current = nextIndex;
     slideTriggeredRef.current = false;
 
-    if (recipe === 'swipe_then_walk' && currentSlide.swipeVideo) {
-      setState('SWIPING');
-      setActiveVideo(currentSlide.swipeVideo);
-    } else if (recipe === 'walk_only' && currentSlide.walkVideo) {
-      // New slide is visible immediately behind AGM while he walks
-      setDisplayedSlideIndex(nextIndex);
-      setState('WALKING');
-      setActiveVideo(currentSlide.walkVideo);
-    } else if (recipe === 'swipe_only' && currentSlide.swipeVideo) {
-      setState('SWIPING');
-      setActiveVideo(currentSlide.swipeVideo);
-    } else {
-      // Direct slide transition
-      setCurrentSlideIndex(nextIndex);
-      setDisplayedSlideIndex(nextIndex);
-      setActiveVideo(PRESENTATION_DATA.slides[nextIndex].explainVideo);
-      setState('IDLE_EXPLAINING');
-      pendingTargetIndexRef.current = null;
-    }
-  }, [currentSlide, totalSlides]);
+    // NEXT / FORWARD: Play swipe next.mp4 (Holographic interaction)
+    setTransitionDirection('next');
+    setState('SWIPING');
+    setActiveVideo(AGM_VIDEOS.SWIPE_NEXT);
+  }, [totalSlides]);
 
   // Handle Video Ended for autonomous continuous performance
   const onVideoEnded = useCallback(() => {
@@ -107,25 +91,17 @@ export function usePresentationSync(): PresentationSyncReturn {
         startTransition(currentSlideIndex + 1);
       }
     } else if (state === 'SWIPING') {
-      // Swipe finished
+      // Swipe finished -> Cut cleanly to target slide & zone (no transit across PDF)
       const targetIdx = pendingTargetIndexRef.current;
-      if (currentSlide.transitionRecipe === 'swipe_then_walk' && currentSlide.walkVideo && targetIdx !== null) {
-        // Automatic Progression: SWIPE -> WALK across new slide!
-        setState('WALKING');
-        setActiveVideo(currentSlide.walkVideo);
-      } else {
-        // SWIPE -> EXPLAIN
-        if (targetIdx !== null) {
-          setCurrentSlideIndex(targetIdx);
-          setDisplayedSlideIndex(targetIdx);
-          setActiveVideo(PRESENTATION_DATA.slides[targetIdx].explainVideo);
-        }
-        setState('IDLE_EXPLAINING');
-        pendingTargetIndexRef.current = null;
-        slideTriggeredRef.current = false;
+      if (targetIdx !== null) {
+        setCurrentSlideIndex(targetIdx);
+        setDisplayedSlideIndex(targetIdx);
+        setActiveVideo(PRESENTATION_DATA.slides[targetIdx].explainVideo);
       }
+      setState('IDLE_EXPLAINING');
+      pendingTargetIndexRef.current = null;
+      slideTriggeredRef.current = false;
     } else if (state === 'WALKING') {
-      // Walk finished -> AGM has reached destination safe zone on new slide!
       const targetIdx = pendingTargetIndexRef.current;
       if (targetIdx !== null) {
         setCurrentSlideIndex(targetIdx);
@@ -136,9 +112,9 @@ export function usePresentationSync(): PresentationSyncReturn {
       pendingTargetIndexRef.current = null;
       slideTriggeredRef.current = false;
     }
-  }, [state, currentSlideIndex, totalSlides, currentSlide, startTransition]);
+  }, [state, currentSlideIndex, totalSlides, startTransition]);
 
-  // Action: NEXT / Spacebar (Manual Skip / Advance Control)
+  // Action: NEXT / Spacebar / Right Arrow / Right Click (Advance with swipe next.mp4)
   const next = useCallback(() => {
     // If currently in middle of transition, fast-forward to destination
     if (state !== 'IDLE_EXPLAINING') {
@@ -154,15 +130,21 @@ export function usePresentationSync(): PresentationSyncReturn {
       return;
     }
 
-    // In IDLE_EXPLAINING: user wants to advance early
+    // In IDLE_EXPLAINING: advance to next slide using swipe next.mp4
     if (currentSlideIndex >= totalSlides - 1) return;
     startTransition(currentSlideIndex + 1);
   }, [state, currentSlideIndex, totalSlides, startTransition]);
 
-  // Action: PREV (Back to previous slide)
+  // Action: PREV / Left Arrow / Left Click (Go back with swipe reverse.mp4)
   const prev = useCallback(() => {
     if (state !== 'IDLE_EXPLAINING') {
-      // Cancel transition and return to current slide idle
+      // If in middle of transition, fast-forward to destination
+      const targetIdx = pendingTargetIndexRef.current;
+      if (targetIdx !== null) {
+        setCurrentSlideIndex(targetIdx);
+        setDisplayedSlideIndex(targetIdx);
+        setActiveVideo(PRESENTATION_DATA.slides[targetIdx].explainVideo);
+      }
       setState('IDLE_EXPLAINING');
       pendingTargetIndexRef.current = null;
       slideTriggeredRef.current = false;
@@ -171,25 +153,26 @@ export function usePresentationSync(): PresentationSyncReturn {
 
     if (currentSlideIndex <= 0) return;
 
+    // PREVIOUS / BACKWARD: Play swipe reverse.mp4 (Remote-button press)
     const prevIndex = currentSlideIndex - 1;
-    setCurrentSlideIndex(prevIndex);
-    setDisplayedSlideIndex(prevIndex);
-    setActiveVideo(PRESENTATION_DATA.slides[prevIndex].explainVideo);
-    setState('IDLE_EXPLAINING');
-    pendingTargetIndexRef.current = null;
+    pendingTargetIndexRef.current = prevIndex;
     slideTriggeredRef.current = false;
+    setTransitionDirection('prev');
+    setState('SWIPING');
+    setActiveVideo(AGM_VIDEOS.SWIPE_REVERSE);
   }, [state, currentSlideIndex]);
 
   // Action: Jump to Slide
   const jumpToSlide = useCallback((targetIndex: number) => {
     if (targetIndex < 0 || targetIndex >= totalSlides) return;
+    setTransitionDirection(targetIndex >= currentSlideIndex ? 'next' : 'prev');
     setCurrentSlideIndex(targetIndex);
     setDisplayedSlideIndex(targetIndex);
     setActiveVideo(PRESENTATION_DATA.slides[targetIndex].explainVideo);
     setState('IDLE_EXPLAINING');
     pendingTargetIndexRef.current = null;
     slideTriggeredRef.current = false;
-  }, [totalSlides]);
+  }, [totalSlides, currentSlideIndex]);
 
   // Action: Toggle Play/Pause
   const togglePlay = useCallback(() => {
@@ -234,6 +217,7 @@ export function usePresentationSync(): PresentationSyncReturn {
     state,
     activeVideo,
     currentAnchor,
+    transitionDirection,
     isPlaying,
     isMuted,
     next,

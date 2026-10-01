@@ -23,6 +23,7 @@ export const App: React.FC = () => {
     state,
     activeVideo,
     currentAnchor,
+    transitionDirection,
     isPlaying,
     isMuted,
     next,
@@ -63,6 +64,15 @@ export const App: React.FC = () => {
 
   // Secret keyboard shortcuts to open utility overlays (Chroma / Drawer)
   useEffect(() => {
+    (window as any).__TEST_JUMP__ = jumpToSlide;
+    (window as any).__AGM_STATE__ = {
+      state,
+      activeVideo,
+      currentSlideIndex,
+      displayedSlideIndex,
+      currentAnchor,
+      transitionDirection,
+    };
     const handleKeyDown = (e: KeyboardEvent) => {
       if (['INPUT', 'TEXTAREA', 'SELECT'].includes((e.target as HTMLElement)?.tagName)) return;
       if (e.key === 'g' || e.key === 'G') setIsDrawerOpen(true);
@@ -70,7 +80,7 @@ export const App: React.FC = () => {
     };
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
-  }, []);
+  }, [jumpToSlide, state, activeVideo, currentSlideIndex, displayedSlideIndex, currentAnchor, transitionDirection]);
 
   return (
     <div className="agm-app-root" ref={containerRef}>
@@ -88,7 +98,7 @@ export const App: React.FC = () => {
         onVideoTimeUpdate={onVideoTimeUpdate}
         onVideoEnded={onVideoEnded}
         isTransitioning={state !== 'IDLE_EXPLAINING'}
-        slideTransitionDirection={'next'}
+        slideTransitionDirection={transitionDirection}
         currentSlideIndex={currentSlideIndex}
         totalSlides={totalSlides}
         onNext={next}
