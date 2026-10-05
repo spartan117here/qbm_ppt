@@ -17,7 +17,9 @@ export const DEFAULT_CHROMA_PARAMS: ChromaKeyParams = {
   brightness: 1.0,
   contrast: 1.0,
 };
-
+//def constraint expo- android {
+// build cmd ("1440");
+//objects const DEFAULT panels}:
 export const VERTEX_SHADER_SOURCE = `
 attribute vec2 a_position;
 attribute vec2 a_texCoord;
